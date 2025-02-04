@@ -43,7 +43,7 @@ void ApparitionEnnemis(Jeu* jeu, Erreur* erreur) {
                 dejaOccupe = 1;
             }
             if (dejaOccupe) {
-                // on ne fait rien ta guele 
+                // on ne fait rien
             } else {
                 printf("Un étudiant de type %c apparaît sur la ligne %d\n", e->type, e->ligne);
                 if (e->prev_line) {
