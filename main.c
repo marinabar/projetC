@@ -151,9 +151,10 @@ int main() {
             PreparerPartie(&erreur, &jeu, chemin);
 
         if (erreur.statut_erreur==1) {
-            printf(ANSI_BG_ROUGE ANSI_TEXTE_BLANC "    ×  Erreur : %s\n" ANSI_RESET, erreur.msg_erreur);
+            printf(ANSI_BG_ROUGE ANSI_TEXTE_BLANC "    ×  Erreur : %s" ANSI_RESET, erreur.msg_erreur);
             LibererJeu(&jeu);
-            return 1;
+            printf(ANSI_TEXTE_GRIS"\n   Appuyez sur Entrée pour continuer..."ANSI_RESET);
+            continue;
         }
 
         JouerPartie(&jeu, &erreur);
@@ -161,7 +162,8 @@ int main() {
         if (erreur.statut_erreur==1) {
             printf(ANSI_BG_ROUGE ANSI_TEXTE_BLANC "    ×  Erreur : %s\n" ANSI_RESET, erreur.msg_erreur);
             LibererJeu(&jeu);
-            return 1;
+            printf(ANSI_TEXTE_GRIS"\n   Appuyez sur Entrée pour continuer..."ANSI_RESET);
+            continue;
         }
 
         LibererJeu(&jeu);

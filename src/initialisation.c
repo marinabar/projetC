@@ -87,6 +87,9 @@ char* Menu(Erreur* erreur) {
         case 1: { // Charger une partie (saisie manuelle)
             char buffer[MAX_NAME_LEN];
             printf("Entrez l'adresse de la partie à charger (exemple: Dossier/2_Talents_De_Sprinteur.txt) : ");
+            printf("\n");
+            fflush(stdout);
+            getchar();
             if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
                 strcpy(erreur->msg_erreur, "Erreur de lecture.");
                 erreur->statut_erreur = 1;

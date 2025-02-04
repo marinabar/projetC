@@ -3,9 +3,9 @@
 
 const TypeEnnemi TYPES_ENNEMIS[] = {
     // symbole, points de vie, vitesse, nom, description
-    {'Z', 5, 2, "Étudiant", "Étudiant de base, avance à moitié endormi, fait 1 dégât"},
+    {'Z', 3, 2, "Étudiant", "Étudiant de base, avance à moitié endormi, fait 1 dégât"},
     {'L', 9, 1, "Étudiant L1", "Résistant mais aussi le plus lent, fait de gros dégâts de 3"},
-    {'X', 3, 4, "Étudiant Talent", "Plus rapide, moins résistant, dégât de 2"},
+    {'X', 2, 4, "Étudiant Talent", "Plus rapide, moins résistant, dégât de 2"},
     {'S', 4, 1, "Syndicaliste", "Augmente la vitesse des ennemis adjacents de sa ligne lorsqu'il meurt, fait 2 dégât"},
     {'F', 6, 3, "Fainéant", "Fait des sauts aléatoires (parfois sur la ligne d'en dessous) ou ne bouge pas pendant plusieurs tours, résistant, fait 1 dégât une fois sur deux"},
     {'D', 6, 1, "Doctorant", "Résistant et soigne les ennemis de 1 PV par tour sur une zone de 3 cases et 3 lignes, fait 1 dégât"}

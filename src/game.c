@@ -30,7 +30,6 @@ void ResoudreActionsTourelles(Jeu* jeu, Erreur* erreur) {
     while (t != NULL) {
         Etudiant* e = jeu->etudiants;
         if (e == NULL) {
-            printf("Pas d'ennemis à attaquer pour dans le jeu\n");
             return;
         }
 
@@ -104,7 +103,6 @@ void ResoudreActionsTourelles(Jeu* jeu, Erreur* erreur) {
 void ResoudreActionsEnnemis(Jeu* jeu, Erreur* erreur) {
     Etudiant* e = jeu->etudiants;
     while (e != NULL) {
-        printf("ResoudreActionsEnnemis\n");
         if (e->position > NB_EMPLACEMENTS + 1) {
             e = e->next;
             continue;
@@ -249,7 +247,7 @@ void DeplacerEnnemis(Jeu* jeu, Erreur* erreur) {
             }
         }
         // vérification ennemi derrière
-        if (e->next_line != NULL){
+        if (e->next_line != NULL && e->next_line->position <= NB_EMPLACEMENTS){
             int diff = e->next_line->position - (e->position - deplacement);
             // si l'ennemi est trop proche de celui de derrière
             if (diff <= 0 && (e->next_line->position - (e->position - 1) < deplacement)){
@@ -269,7 +267,6 @@ void DeplacerEnnemis(Jeu* jeu, Erreur* erreur) {
             }
             t = t->next;
         }
-
         printf("l'ennemi de type %c à la ligne %d en position %d se déplace de %d\n", e->type, e->ligne, e->position, deplacement);
         printf("il lui reste %d points de vie\n", e->pointsDeVie);
         e->position -= deplacement;
