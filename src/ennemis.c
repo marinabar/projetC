@@ -8,7 +8,7 @@ const TypeEnnemi TYPES_ENNEMIS[] = {
     {'X', 2, 4, "Étudiant Talent", "Plus rapide, moins résistant, dégât de 2"},
     {'S', 4, 1, "Syndicaliste", "Augmente la vitesse des ennemis adjacents de sa ligne lorsqu'il meurt, fait 2 dégât"},
     {'F', 6, 3, "Fainéant", "Fait des sauts aléatoires (parfois sur la ligne d'en dessous) ou ne bouge pas pendant plusieurs tours, résistant, fait 1 dégât une fois sur deux"},
-    {'D', 6, 1, "Doctorant", "Résistant et soigne les ennemis de 1 PV par tour sur une zone de 3 cases et 3 lignes, fait 1 dégât"}
+    {'D', 3, 1, "Doctorant", "Résistant et soigne les ennemis de 1 PV par tour sur une zone de 3 cases et 3 lignes, fait 1 dégât"}
 };
 
 
@@ -119,6 +119,10 @@ Etudiant* InitialisationEnnemis(FILE* fichier_ennemis, Jeu* jeu, Erreur* erreur)
             lignes_ennemis[num_ligne - 1]->next_line = nouvel_etudiant;
             // on met à jour la référence au dernier ennemi de la ligne de jeu
             lignes_ennemis[num_ligne - 1] = nouvel_etudiant;
+        }
+        printf("        Un %c apparaîtra au tour %d sur la ligne %d\n", (char)nouvel_etudiant->type, nouvel_etudiant->tour, nouvel_etudiant->ligne);
+        if (nouvel_etudiant->prev_line) {
+            printf("            Il suivra un %c en ligne %d qui apparait au tour %d\n", (char)nouvel_etudiant->prev_line->type, nouvel_etudiant->prev_line->ligne, nouvel_etudiant->prev_line->tour);
         }
     }
 

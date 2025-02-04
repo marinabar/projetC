@@ -111,7 +111,6 @@ void PreparerPartie(Erreur* erreur, Jeu* jeu, const char* chemin_niveau);
 //prototypes de fonctions d'introduction 
 void IntroduireJeu();
 char* Menu(Erreur* erreur);
-
 // prototypes de fonctions de gestion des ennemis
 const TypeEnnemi* trouverTypeEnnemi(char symbole);
 const TypeEnnemi* VerifType(int *tour, int *ligne, char *symbole, Erreur *erreur);

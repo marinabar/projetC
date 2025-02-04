@@ -1,21 +1,54 @@
 #include "header.h"
+/*
+        if (e->tour <= jeu->tour && e->position > NB_EMPLACEMENTS) {
+            int nbAttente = compterEnAttente(jeu, e->ligne, NB_EMPLACEMENTS+1);
+            if (nbAttente < MAX_QUEUE) {
+                int posAttente = NB_EMPLACEMENTS+1 + nbAttente; // affecte la première case libre dans la file
+                printf("Un étudiant de type %c apparaît sur la ligne %d à la position %d\n", 
+                        e->type, e->ligne, posAttente);
+                e->position = posAttente;
+            } else {
+                // La file d'attente est pleine sur cette ligne : l'ennemi reste en attente
+                printf("La file d'attente sur la ligne %d est pleine pour l'étudiant de type %c\n", e->ligne, e->type);
+                erreur->statut_erreur = 1;
+                strcpy(erreur->msg_erreur, "La file d'attente est pleine sur cette ligne");
+                return;
+            }
+        }
+        e = e->next;
+    }
+}
+
+int compterEnAttente(Jeu* jeu, int ligne, int arrivee) {
+    int count = 0;
+    for (Etudiant* e = jeu->etudiants; e != NULL; e = e->next) {
+        if (e->ligne == ligne && e->position >= arrivee && e->position < arrivee + MAX_QUEUE)
+            count++;
+    }
+    return count;
+}
+*/
 
 void ApparitionEnnemis(Jeu* jeu, Erreur* erreur) {
     Etudiant* e = jeu->etudiants;
 
     while (e != NULL) {
-        if (e->tour == jeu->tour) {
+        if (e->tour <= jeu->tour && e->position > NB_EMPLACEMENTS + 1) {
             // vérifie si l'étudiant précédent sur la même ligne occupe déjà la case d'apparition
             int dejaOccupe = 0;
-            if (e->prev_line != NULL && 
+            if (e->prev_line && 
                 e->prev_line->position == (NB_EMPLACEMENTS + 1) &&
                 e->prev_line->pointsDeVie > 0) 
             {
                 dejaOccupe = 1;
             }
             if (dejaOccupe) {
-                e->tour++;  // décale l'apparition au tour suivant
+                // on ne fait rien ta guele 
             } else {
+                printf("Un étudiant de type %c apparaît sur la ligne %d\n", e->type, e->ligne);
+                if (e->prev_line) {
+                    printf("Il suit un étudiant de type %c à la position %d\n", e->prev_line->type, e->prev_line->position);
+                }
                 e->position = NB_EMPLACEMENTS + 1;  // case d'apparition
             }
         }
@@ -210,13 +243,8 @@ void DeplacerEnnemis(Jeu* jeu, Erreur* erreur) {
         Tourelle* t1 = jeu->tourelles;
         while (t1) {
             // si pour cette tourelle l'ennemi est celui qu'elle devrait attaquer
-            if (t1->ligne == e->ligne && t1->position < e->position && e->prev_line == NULL) {
-                if (t1->type == 'R') { // tourelle eduroam
-                    if (e->position == NB_EMPLACEMENTS + 1) {
-                        deplacement = 1;
-                        t1 = t1->next;
-                        continue;
-                    }
+            if (t1->ligne == e->ligne && t1->position < e->position && e->prev_line == NULL && e->position < t1->position + 2) {
+                if (t1->type == 'R') { 
                     int choix = rand() % 3;
                     switch (choix) {
                         case 0:
@@ -242,16 +270,22 @@ void DeplacerEnnemis(Jeu* jeu, Erreur* erreur) {
         if (e->prev_line != NULL){
             int diff = (e->position - deplacement) - e->prev_line->position ;
             // si l'ennemi est trop proche de celui de devant
-            if (diff <= 0 && (e->position - (e->prev_line->position + 1) < deplacement)){
-                deplacement = e->position - (e->prev_line->position + 1);
+            int deplacement_possible = e->position - e->prev_line->position - 1;
+            printf("déplacement possible : %d\n", deplacement_possible);
+            printf("ennemi de devant de type %c en position %d\n", e->prev_line->type, e->prev_line->position);
+            if (diff <= 0 && deplacement_possible < deplacement){
+                printf("collision ennemi devant\n");
+                deplacement = deplacement_possible;
             }
         }
         // vérification ennemi derrière
-        if (e->next_line != NULL && e->next_line->position <= NB_EMPLACEMENTS){
+        if (deplacement <0 && e->next_line != NULL && e->next_line->position <= NB_EMPLACEMENTS){
             int diff = e->next_line->position - (e->position - deplacement);
             // si l'ennemi est trop proche de celui de derrière
-            if (diff <= 0 && (e->next_line->position - (e->position - 1) < deplacement)){
-                deplacement = e->next_line->position - (e->position - 1);
+            int deplacement_possible = e->next_line->position - (e->position - 1);
+            if (diff <= 0 && deplacement_possible > deplacement){
+                printf("collision ennemi derrière\n");
+                deplacement = deplacement_possible;
             }
         }
         // vérification collision tourelle
