@@ -102,7 +102,7 @@ typedef struct {
     int tour;
     int score;
     char pseudo[50];
-    char fichier_ennemis[255];
+    char fichier_ennemis[255]; 
 } Jeu;
 
 // prototypes de fonctions du main

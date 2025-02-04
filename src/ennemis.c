@@ -120,10 +120,6 @@ Etudiant* InitialisationEnnemis(FILE* fichier_ennemis, Jeu* jeu, Erreur* erreur)
             // on met à jour la référence au dernier ennemi de la ligne de jeu
             lignes_ennemis[num_ligne - 1] = nouvel_etudiant;
         }
-        printf("        Un %c apparaîtra au tour %d sur la ligne %d\n", (char)nouvel_etudiant->type, nouvel_etudiant->tour, nouvel_etudiant->ligne);
-        if (nouvel_etudiant->prev_line) {
-            printf("            Il suivra un %c en ligne %d qui apparait au tour %d\n", (char)nouvel_etudiant->prev_line->type, nouvel_etudiant->prev_line->ligne, nouvel_etudiant->prev_line->tour);
-        }
     }
 
     return premier;

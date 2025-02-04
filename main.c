@@ -118,7 +118,7 @@ int main() {
     scanf("%49s", pseudo);
     while (getchar() != '\n');
 
-    //IntroduireJeu();
+    IntroduireJeu();
 
 
     // Boucle de parties 
